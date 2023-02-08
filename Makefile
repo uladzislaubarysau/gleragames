@@ -11,3 +11,6 @@ run: ## run app
 
 run_dc: ## run app with docker compose
 	@docker-compose up --build
+
+create_migration: ## add new migration, have to pass parameter "name" 
+	@migrate create -ext sql -dir migration -seq $(name)

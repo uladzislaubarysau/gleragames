@@ -1,5 +1,5 @@
 {
-    "http_port" : "8080",
-    "stats_time" : 60,
-    "debug_mode" : true
+    "url" : "http://google.com",
+    "data_source_name" : "host=127.0.0.1 port=5432 user=postgres password=postgres dbname=gleragames sslmode=disable",
+    "db_query_timeout" : "1s"
 }

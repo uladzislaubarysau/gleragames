@@ -14,5 +14,5 @@ func main() {
 		return
 	}
 	a := application.NewApplication(c)
-	a.Run()
+	a.SendRequest()
 }

@@ -2,14 +2,18 @@ package internal
 
 import (
 	"encoding/json"
+	"errors"
 	"flag"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"time"
 )
 
-// Config used to initialize service
 type Config struct {
+	Url            string   `json:"url"`
+	DataSourceName string   `json:"data_source_name"`
+	DBQueryTimeout Duration `json:"db_query_timeout"`
 }
 
 func NewConfig() (*Config, error) {
@@ -25,7 +29,6 @@ func NewConfig() (*Config, error) {
 	return &c, nil
 }
 
-// LoadConfigFromFile parsing json file to config struct
 func LoadConfigFromFile(configPath string, c *Config) {
 	afp, err := filepath.Abs(configPath)
 	if err != nil {
@@ -49,5 +52,30 @@ func LoadConfigFromFile(configPath string, c *Config) {
 	err = json.Unmarshal(data, &c)
 	if err != nil {
 		panic(err)
+	}
+}
+
+type Duration struct {
+	time.Duration
+}
+
+func (d *Duration) UnmarshalJSON(b []byte) error {
+	var v interface{}
+	if err := json.Unmarshal(b, &v); err != nil {
+		return err
+	}
+	switch value := v.(type) {
+	case float64:
+		d.Duration = time.Duration(value)
+		return nil
+	case string:
+		var err error
+		d.Duration, err = time.ParseDuration(value)
+		if err != nil {
+			return err
+		}
+		return nil
+	default:
+		return errors.New("invalid duration")
 	}
 }
