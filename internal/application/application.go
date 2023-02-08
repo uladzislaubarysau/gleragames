@@ -1,6 +1,7 @@
 package application
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -26,5 +27,6 @@ func (a *Application) SendRequest() {
 		log.Fatalf("can't make GET request: %v", err)
 	}
 
+	fmt.Printf("status code: %d\n", resp.StatusCode)
 	a.db.SaveRequest(resp.StatusCode)
 }

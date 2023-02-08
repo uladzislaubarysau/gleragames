@@ -1,11 +1,12 @@
 version: "3.8"
 
 services:
-
-  server:
+  app:
     build:
       context: .
       dockerfile: docker/Dockerfile
+    networks:
+        - new
     depends_on:
       migrate:
         condition: service_completed_successfully
