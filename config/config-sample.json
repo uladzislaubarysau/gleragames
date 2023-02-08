@@ -1,0 +1,5 @@
+{
+    "http_port" : "8080",
+    "stats_time" : 60,
+    "debug_mode" : true
+}
