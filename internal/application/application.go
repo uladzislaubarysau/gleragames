@@ -6,18 +6,18 @@ import (
 	"net/http"
 
 	"github.com/uladzislaubarysau/gleragames/internal"
-	"github.com/uladzislaubarysau/gleragames/internal/db"
+	"github.com/uladzislaubarysau/gleragames/internal/repository"
 )
 
 type Application struct {
 	c  *internal.Config
-	db *db.DB
+	db *repository.DBRepository
 }
 
 func NewApplication(c *internal.Config) *Application {
 	return &Application{
 		c:  c,
-		db: db.NewDB(c.DataSourceName, c.DBQueryTimeout.Duration),
+		db: repository.NewDBRepository(c.DataSourceName, c.DBQueryTimeout.Duration),
 	}
 }
 
